@@ -31,11 +31,10 @@
             return true;
         }
 
-        public SpaceShip MoveShipTo(long id, SpaceBase? spaceBase) {
+        public SpaceShip? MoveShipTo(long id, SpaceBase? spaceBase) {
             if (id == null)
             {
-                throw new ArgumentException(
-                    "How did you even do that? The parameter is not nullable! How bad can you be?");
+                throw new ArgumentException("How did you even do that? The parameter is not nullable! How bad can you be?");
             }
 
             if (spaceBase == null)

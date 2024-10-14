@@ -1,9 +1,3 @@
-﻿namespace SpaceBaseEnhanced
-{
-    public class ApplicationException : Exception
-    {
-        public ApplicationException(string message) : base(message)
-        {
-        }
-    }
+﻿namespace SpaceBaseEnhanced {
+    public class ApplicationException(string message) : Exception(message);
 }

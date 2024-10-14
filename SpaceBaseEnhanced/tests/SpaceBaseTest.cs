@@ -77,7 +77,7 @@ public class SpaceBaseTest {
         var spaceShipNotDocked = new SpaceShip(2001, 1701, spaceBase);
         spaceBase.Docking(spaceShip);
         // spaceBase.ShipList.Find(ship => ship.Id == spaceShip);
-        Assert.Throws<ArgumentException>(() => spaceBase.MoveShipTo(spaceShipNotDocked.Id, spaceBase1));
+        Assert.Throws<ApplicationException>(() => spaceBase.MoveShipTo(spaceShipNotDocked.Id, spaceBase1));
     }
 
     [Fact]

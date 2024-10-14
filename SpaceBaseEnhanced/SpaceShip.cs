@@ -1,38 +1,19 @@
 ﻿namespace SpaceBaseEnhanced {
     public class SpaceShip : IComparable<SpaceShip> {
         public readonly double MaxFuel = 2000;
-        private readonly double _fuelConsumptionPerAu = 3.58;
-        private long _idCounter = 100;
-        private readonly long _id;
-        private int _posX;
-        private int _posY;
-        private double _fuel;
+        private readonly long _idCounter = 100;
         private SpaceBase _homeBase;
         private SpaceBase _dockingBase;
 
-        public long IdCounter {
-            get => _idCounter;
-            set => _idCounter = value;
-        }
+        public double FuelConsumptionPerAu { get; } = 3.58;
 
-        public double FuelConsumptionPerAu => _fuelConsumptionPerAu;
+        public long Id { get; }
 
-        public long Id => _id;
+        public int PosX { get; set; }
 
-        public int PosX {
-            get => _posX;
-            set => _posX = value;
-        }
+        public int PosY { get; set; }
 
-        public int PosY {
-            get => _posY;
-            set => _posY = value;
-        }
-
-        public double Fuel {
-            get => _fuel;
-            set => _fuel = value;
-        }
+        public double Fuel { get; set; }
 
         public SpaceBase HomeBase {
             get => _homeBase;
@@ -43,7 +24,8 @@
             get => _dockingBase;
             set {
                 _dockingBase = value;
-                if (value == HomeBase) {
+                if (value == HomeBase)
+                {
                     Refuel(MaxFuel);
                 }
             }
@@ -51,7 +33,7 @@
 
         public SpaceShip(int posX, int posY, SpaceBase homeBase) {
             _idCounter++;
-            _id = _idCounter;
+            Id = _idCounter;
             PosX = posX;
             PosY = posY;
             Fuel = MaxFuel;
@@ -60,23 +42,25 @@
 
 
         public void Refuel(double fuel) {
-            if (fuel < 0) {
+            if (fuel < 0)
+            {
                 throw new ArgumentException("Fuel Value cannot be negative!");
             }
 
-            _fuel = Math.Min(_fuel + fuel, MaxFuel);
+            Fuel = Math.Min(Fuel + fuel, MaxFuel);
         }
 
         public void MoveTo(int posX, int posY) {
             var distance = CalculateDistanceTo(posX, posY);
             var consumption = CalculateConsuption(distance);
-            if (consumption > Fuel) {
-                throw new ArgumentException("Not enough fuel for this journey");
+            if (consumption > Fuel)
+            {
+                throw new ApplicationException("Not enough fuel for this journey");
             }
 
-            _posX = posX;
-            _posY = posY;
-            _fuel -= consumption;
+            PosX = posX;
+            PosY = posY;
+            Fuel -= consumption;
         }
 
         private double CalculateDistanceTo(int posX, int posY) {
@@ -85,11 +69,12 @@
         }
 
         private double CalculateConsuption(double distanceInAu) {
-            if (distanceInAu < 0) {
+            if (distanceInAu < 0)
+            {
                 return 0;
             }
 
-            return (distanceInAu * _fuelConsumptionPerAu);
+            return (distanceInAu * FuelConsumptionPerAu);
         }
 
         public bool IsHomeBase(SpaceBase spaceBase) {
@@ -100,17 +85,8 @@
             return other == null ? 1 : Id.CompareTo(other.Id);
         }
 
-        // public override bool Equals(object obj) {
-        //     return base.Equals(obj);
-        // }
-        //
-        // public override int GetHashCode() {
-        //     return base.GetHashCode();
-        // }
-        //
-        // public override string ToString() {
-        //     return base.ToString();
-        // }
-        // WIRD ALLES VON C#  IM HINTERGRUND SELBST GENERIERT
+        public override string ToString() {
+            return $"Id: {Id}, PosX: {PosX}, PosY: {PosY}, Fuel: {Fuel} / {MaxFuel}";
+        }
     }
 }

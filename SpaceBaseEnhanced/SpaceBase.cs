@@ -43,7 +43,7 @@
                 return null;
             }
 
-            SpaceShip? schiff = ShipList.FirstOrDefault(ship => ship.Id == id, null);
+            var schiff = ShipList.FirstOrDefault(ship => ship.Id == id, null);
             if (schiff == null)
             {
                 return null;
@@ -64,12 +64,19 @@
 
         public List<SpaceShip> ArrangeShipsByFuel() {
             var sortedShipList = new List<SpaceShip>(ShipList);
-            if (sortedShipList == null) throw new ArgumentNullException(nameof(sortedShipList)); //TODO assertions (maybe)
+            if (sortedShipList == null)
+                throw new ArgumentNullException(nameof(sortedShipList));
             sortedShipList.Sort(new FuelComparer());
             return sortedShipList;
         }
+        
+        public override string ToString() {
+            return $"Name: {Name}, PosX: {PosX}, PosY: {PosY}, Ships Inside the Station: {ShipList}";
+        }
     }
 
+    
+    
     public class FuelComparer : IComparer<SpaceShip> {
         public int Compare(SpaceShip? s1, SpaceShip? s2) {
             if (s1 == null || s2 == null)

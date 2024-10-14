@@ -71,7 +71,7 @@
             var distance = CalculateDistanceTo(posX, posY);
             var consumption = CalculateConsuption(distance);
             if (consumption > Fuel) {
-                throw new Exception("Not enough fuel for this journey");
+                throw new ArgumentException("Not enough fuel for this journey");
             }
 
             _posX = posX;
